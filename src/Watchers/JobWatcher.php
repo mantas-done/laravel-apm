@@ -1,0 +1,25 @@
+<?php namespace Done\LaravelAPM\Watchers;
+
+
+use Done\LaravelAPM\LogWriter;
+
+class JobWatcher
+{
+    public static function start($event)
+    {
+        $event->job->apm_job_start = microtime(true);
+    }
+
+    public static function record($event)
+    {
+        $duration = microtime(true) - $event->job->apm_job_start;
+
+        LogWriter::log(
+            round(LARAVEL_START),
+            $duration,
+            QueryWatcher::$total_milliseconds / 1000,
+            'job',
+            $event->job->resolveName()
+        );
+    }
+}

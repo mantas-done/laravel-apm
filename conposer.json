@@ -1,0 +1,21 @@
+{
+  "name": "mantas-done/laravel-apm",
+  "description": "Application monitoring for Laravel",
+  "authors": [
+    {
+      "name": "Mantas Donelavičius"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Done\\LaravelAPM\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Done\\LaravelAPM\\ApmServiceProvider"
+      ]
+    }
+  }
+}
