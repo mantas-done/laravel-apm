@@ -22,20 +22,27 @@ class ApmServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $app = $this->app;
+        $config_path = __DIR__ . '/../config/apm.php';
+        $this->mergeConfigFrom($config_path, 'apm');
 
-        $app['events']->listen(RequestHandled::class, [RequestWatcher::class, 'record']);
+        // boot apm:clear event if apm is disabled, because user registered it in scheduler and will call it anyways
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ApmClearCommand::class
+            ]);
+        }
 
-        $app['events']->listen(ScheduledTaskFinished::class, [ScheduleWatcher::class, 'record']);
+        // don't register if AMP is not enabled
+        if ($this->app['config']['apm']['enabled']) {
+            $this->app['events']->listen(RequestHandled::class, [RequestWatcher::class, 'record']);
 
-        $app['events']->listen(JobProcessing::class, [JobWatcher::class, 'start']); // start
-        $app['events']->listen(JobProcessed::class, [JobWatcher::class, 'record']); // finish
-        $app['events']->listen(JobFailed::class, [JobWatcher::class, 'record']); // finish
+            $this->app['events']->listen(ScheduledTaskFinished::class, [ScheduleWatcher::class, 'record']);
 
-        $app['events']->listen(QueryExecuted::class, [QueryWatcher::class, 'record']);
+            $this->app['events']->listen(JobProcessing::class, [JobWatcher::class, 'start']); // start
+            $this->app['events']->listen(JobProcessed::class, [JobWatcher::class, 'record']); // finish
+            $this->app['events']->listen(JobFailed::class, [JobWatcher::class, 'record']); // finish
 
-        $this->commands([
-            ApmClearCommand::class
-        ]);
+            $this->app['events']->listen(QueryExecuted::class, [QueryWatcher::class, 'record']);
+        }
     }
 }

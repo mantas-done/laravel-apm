@@ -16,10 +16,16 @@ Add route to your routes/web.php file (don't forget securing it from unwanted vi
 Route::get('/apm', '\Done\LaravelAPM\ApmController@index');
 ```
 
-Add apm:clear to App/Console/Kernel.php to clear old log files
+Daily clear log files by adding scheduled job to App/Console/Kernel.php
 
 ```
 $schedule->command('apm:clear')->daily();
+```
+
+Enable APM in .env file
+
+```
+APM=1
 ```
 
 ## Why?
