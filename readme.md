@@ -1,6 +1,8 @@
 # Laravel APM
 
-Monitor requests/cron/queue execution times in production.
+Monitor requests/cron/queue execution times in production.   
+
+If you have a question: which page to optimize to reduce the server load? Then this package is for you.
 
 ![](http://i.imgur.com/wrUwCRi.png)
 
@@ -30,9 +32,7 @@ APM=1
 
 ## Why?
 
-The main goal of Laravel APM is to find which code to optimize to reduce server load in production. APM stands for application performance monitoring.   
-
-Laravel APM can show pages that have the biggest impact on server load, also pages that spend the most time in SQL queries and some other stats.   
+Laravel APM can show pages that have the biggest impact on the server load. When you are developing the website, it is hard to tell which pages will receive the most pageviews and which will use the most resources: (per page resource usage) x (pageviews) = (this package stats)
 
 Running this package in production has minimal impact on server load.
 
@@ -49,3 +49,7 @@ $schedule->call(function () {
     DB::table('recent_users')->delete();
 })->daily()->setName('some-name'); // add ->setName()
 ```
+
+## Laravel Telescope
+
+It might seem that they are similar. But Telescope helps figure out what each request does on their own. This package groups all the requests by URL and shows overall statistics.
