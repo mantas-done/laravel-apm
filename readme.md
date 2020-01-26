@@ -13,7 +13,7 @@ composer require mantas-done/laravel-apm
 Add route to your routes/web.php file (don't forget securing it from unwanted visitors)
 
 ```php
-Route::get('/apm', '\Done\LaravelAPM\ApmController@index');
+Route::get('/apm', '\Done\LaravelAPM\ApmController@index')->name('apm');
 ```
 
 Daily clear log files by adding scheduled job to App/Console/Kernel.php

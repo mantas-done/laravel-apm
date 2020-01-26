@@ -11,7 +11,12 @@ class ApmController
 
     public function index(Request $r)
     {
-        $filter_type = request('type', 'request');
+        if (!request('type')) {
+            $url = route('apm', ['type' => 'request']);
+            return redirect($url);
+        }
+
+        $filter_type = request('type');
         $group = request('group','total-time');
 
         if (!in_array($filter_type, self::$valid_filter_types)) {
