@@ -3,9 +3,29 @@
 class LogWriter
 {
     private static $directory_path = 'app/apm';
+    
+    private static $data = '';
 
+    public static function logAndWrite($current_time, $total_duration, $sql_duration, $type, $name, $user = null)
+    {
+        self::log($current_time, $total_duration, $sql_duration, $type, $name, $user);
+        self::write();
+    }
+
+    // log in memory
     public static function log($current_time, $total_duration, $sql_duration, $type, $name, $user = null)
     {
+        self::$data .= self::formatData($current_time, $total_duration, $sql_duration, $type, $name, $user);
+    }
+
+    // write to disk
+    public static function write()
+    {
+        $data = self::$data;
+        if (!trim($data)) {
+            return;
+        }
+
         $directory = self::directory();
         $filename = self::filename();
 
@@ -27,9 +47,11 @@ class LogWriter
 
         file_put_contents(
             $filename,
-            self::formatData($current_time, $total_duration, $sql_duration, $type, $name, $user),
+            $data,
             FILE_APPEND | LOCK_EX
         );
+        
+        self::$data = '';
     }
 
     private static function filename()

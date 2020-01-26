@@ -7,7 +7,7 @@ class ScheduleWatcher
 {
     public static function record(ScheduledTaskFinished $event)
     {
-        LogWriter::log(
+        LogWriter::logAndWrite(
             round(LARAVEL_START),
             $event->runtime,
             QueryWatcher::getMilliseconds() / 1000,

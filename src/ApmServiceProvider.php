@@ -1,11 +1,13 @@
 <?php namespace Done\LaravelAPM;
 
 use Done\LaravelAPM\Console\ApmClearCommand;
+use Done\LaravelAPM\Middleware\DelayedWriter;
 use Done\LaravelAPM\Watchers\JobWatcher;
 use Done\LaravelAPM\Watchers\QueryWatcher;
 use Done\LaravelAPM\Watchers\RequestWatcher;
 use Done\LaravelAPM\Watchers\ScheduleWatcher;
 use Illuminate\Console\Events\ScheduledTaskFinished;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Queue\Events\JobFailed;
@@ -17,6 +19,7 @@ class ApmServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->app[Kernel::class]->pushMiddleware(DelayedWriter::class);
         $this->loadViewsFrom(__DIR__ . '/views', 'apm');
     }
 
