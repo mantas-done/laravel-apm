@@ -10,7 +10,7 @@ class ScheduleWatcher
         LogWriter::log(
             round(LARAVEL_START),
             $event->runtime,
-            QueryWatcher::$total_milliseconds / 1000,
+            QueryWatcher::getMilliseconds() / 1000,
             'schedule',
             $event->task->getSummaryForDisplay() ?: 'Closure'
         );

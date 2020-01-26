@@ -17,7 +17,7 @@ class JobWatcher
         LogWriter::log(
             round(LARAVEL_START),
             $duration,
-            QueryWatcher::$total_milliseconds / 1000,
+            QueryWatcher::getMilliseconds() / 1000,
             'job',
             $event->job->resolveName()
         );

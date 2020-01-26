@@ -12,7 +12,7 @@ class RequestWatcher
         LogWriter::log(
             round(LARAVEL_START),
             $duration,
-            QueryWatcher::$total_milliseconds / 1000,
+            QueryWatcher::getMilliseconds() / 1000,
             'request',
             request()->path(),
             \Auth::check() ? \Auth::user()->email : request()->ip()
