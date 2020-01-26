@@ -8,6 +8,8 @@ If you have a question: which page to optimize to reduce the server load? Then t
 
 ## Installation
 
+Supported Laravel versions: 5.5, 5.6, 5.7, 5.8, 6+
+
 ```
 composer require mantas-done/laravel-apm
 ```
