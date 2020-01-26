@@ -18,7 +18,8 @@ class LogParser
         }
 
         if (!file_exists($path)) {
-            return compact('count_by_hour', 'top_requests');
+            $top_total_count = 0;
+            return compact('count_by_hour', 'top_requests', 'top_total_count');
         }
 
         $data = \File::get($path);
@@ -95,8 +96,6 @@ class LogParser
 
     private static function path()
     {
-//        return storage_path('app/apm/apm-' . date('Y-m-d') . '.txt');
-        return storage_path('app/apm/apm-2019-12-01-small.txt');
-//        return storage_path('app/apm/apm-2019-12-01-big.txt');
+        return storage_path('app/apm/apm-' . date('Y-m-d') . '.txt');
     }
 }

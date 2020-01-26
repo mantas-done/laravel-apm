@@ -3,7 +3,6 @@
 
 // php memory x4 file size
 
-use App\Services\Apm\LogParser;
 use Illuminate\Http\Request;
 
 class ApmController
@@ -12,11 +11,7 @@ class ApmController
 
     public function index(Request $r)
     {
-        if (!request('type')) {
-            return view('apm::pages.overview');
-        }
-
-        $filter_type = request('type');
+        $filter_type = request('type', 'request');
         $group = request('group','total-time');
 
         if (!in_array($filter_type, self::$valid_filter_types)) {
@@ -25,6 +20,6 @@ class ApmController
 
         $data = LogParser::parse($filter_type, $group);
 
-        return view('apm::pages.index', compact('data', 'group'));
+        return view('apm::pages.index', compact('data', 'group', 'filter_type'));
     }
 }

@@ -15,7 +15,7 @@ class RequestWatcher
             QueryWatcher::$total_milliseconds / 1000,
             'request',
             request()->path(),
-            \Auth::check() ? request()->user()->email : request()->ip()
+            \Auth::check() ? \Auth::user()->email : request()->ip()
         );
     }
 }

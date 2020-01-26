@@ -35,14 +35,7 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item @if (!request('type')) active @endif">
-            <a class="nav-link" href="?">
-                <i class="fas fa-fw fa-home"></i>
-                <span>Overview</span></a>
-        </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item @if (request('type') === 'request') active @endif">
+        <li class="nav-item @if ($filter_type === 'request') active @endif">
             <a class="nav-link" href="?type=request">
                 <i class="fas fa-fw fa-desktop"></i>
                 <span>Web</span></a>
@@ -56,7 +49,7 @@
         </li>
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item @if (request('type') === 'job') active @endif">
+        <li class="nav-item @if ($filter_type === 'job') active @endif">
             <a class="nav-link" href="?type=job">
                 <i class="fas fa-fw fa-layer-group"></i>
                 <span>Queues</span></a>

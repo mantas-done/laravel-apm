@@ -17,7 +17,6 @@
                     <option value="longest" @if (request('group') === 'longest') selected @endif>Longest requests</option>
                     <option value="request-count" @if (request('group') === 'request-count') selected @endif>Request count</option>
                 </select>
-                <input type="text" name="search">
                 <button>Filter</button>
             </form>
         </div>
@@ -52,7 +51,7 @@
 
                 $percent = round($value / $total_time * 100);
                 $block_data[] = [
-                    'left' => $group === 'request-count' ? "$name ($value requests)" : $name . ' (' . \App\Services\Apm\Helpers\Helper::timeForHumans($value) . ')',
+                    'left' => $group === 'request-count' ? "$name ($value requests)" : $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')',
                     'right' => $percent . '%',
                     'percent' => $percent,
                 ];
