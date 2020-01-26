@@ -1,8 +1,9 @@
 # Laravel APM
 
-Find website performance bottlenecks in production.
+Monitor requests/cron/queue execution times in production.
 
 ![](http://i.imgur.com/2KTtx5f.png)
+![](http://i.imgur.com/wxreXP2.png)
 
 ## Installation
 
@@ -32,11 +33,10 @@ APM=1
 
 The main goal of Laravel APM is to find which code to optimize to reduce server load in production. APM stands for application performance monitoring.   
 
-Laravel APM can show pages that have the biggest impact on server load, which pages spent the most time in SQL queries and other stats.   
+Laravel APM can show pages that have the biggest impact on server load, also pages that spend the most time in SQL queries and some other stats.   
 
-Running this package in production almost doesn't have any impact on server load. Moreover it is probably the only free self hosted Laravel APM.
+Running this package in production has minimal impact on server load.
 
 ## Technical
 
-This package logs every user request, also queue and cron job execution in a file (storage/app/apm/apm-2020-01-01.txt). Logging adds an overhead of 1 ms to each request (0.001 second).   
-Log file is parsed only when viewing the dashboard. Parsing is quite fast, file is parsed over 100,000 lines per second.
+This package logs every user request to a file (storage/app/apm/apm-2020-01-01.txt). On average logging adds an overhead of less than 1 ms to each request (0.001 second).
