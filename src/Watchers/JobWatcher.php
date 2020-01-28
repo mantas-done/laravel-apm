@@ -15,7 +15,7 @@ class JobWatcher
         $duration = microtime(true) - $event->job->apm_job_start;
 
         LogWriter::logAndWrite(
-            round(LARAVEL_START),
+            round($event->job->apm_job_start),
             $duration,
             QueryWatcher::getMilliseconds() / 1000,
             'job',
