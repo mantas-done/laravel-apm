@@ -56,7 +56,7 @@ class LogWriter
 
     private static function filename()
     {
-        $filename = 'apm-' . date('Y-m-d');
+        $filename = 'apm-' . date('Y-m-d_H');
         $full_path = storage_path(self::$directory_path . '/' . $filename . '.txt');
 
         return $full_path;

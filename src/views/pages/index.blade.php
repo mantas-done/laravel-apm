@@ -16,6 +16,7 @@
                     <option value="sql-time" @if (request('group') === 'sql-time') selected @endif>SQL time</option>
                     <option value="longest" @if (request('group') === 'longest') selected @endif>Longest requests</option>
                     <option value="request-count" @if (request('group') === 'request-count') selected @endif>Request count</option>
+                    <option value="user" @if (request('group') === 'user') selected @endif>User requests</option>
                 </select>
                 <button>Filter</button>
             </form>
@@ -51,7 +52,7 @@
 
                 $percent = round($value / $total_time * 100);
                 $block_data[] = [
-                    'left' => $group === 'request-count' ? "$name ($value requests)" : $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')',
+                    'left' => in_array($group, ['request-count', 'user']) ? "$name ($value requests)" : $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')',
                     'right' => $percent . '%',
                     'percent' => $percent,
                 ];
@@ -86,6 +87,8 @@
                         <p>Some pages with low amount of data will load quickly. After some time when some tables gather a lot of rows, those pages might start to load slower. All the data is shown for a single page load.</p>
                     @elseif ($group === 'request-count')
                         Pages that received the most requests.
+                    @elseif ($group === 'user')
+                        How many requests each user made
                     @else
                         <?php throw new \Exception('unknown group'); ?>
                     @endif
