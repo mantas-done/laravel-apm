@@ -36,7 +36,7 @@ class ApmServiceProvider extends ServiceProvider
         }
 
         // don't register if AMP is not enabled
-        if ($this->app['config']['apm']['enabled']) {
+        if ($this->app['config']['apm']['enabled'] ?? false) {
             $this->app['events']->listen(RequestHandled::class, [RequestWatcher::class, 'record']);
 
             $this->app['events']->listen(ScheduledTaskFinished::class, [ScheduleWatcher::class, 'record']);
