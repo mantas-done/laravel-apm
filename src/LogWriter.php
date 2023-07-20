@@ -34,7 +34,7 @@ class LogWriter
         }
 
         if (!file_exists($filename)) {
-            file_put_contents($filename, '', LOCK_EX);
+            file_put_contents($filename, '');
         }
 
         $size = filesize($filename);
@@ -48,7 +48,7 @@ class LogWriter
         file_put_contents(
             $filename,
             $data,
-            FILE_APPEND | LOCK_EX
+            FILE_APPEND
         );
         
         self::$data = '';
