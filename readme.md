@@ -8,7 +8,7 @@ If you have a question: which page to optimize to reduce the server load? Then t
 
 ## Installation
 
-Supported Laravel versions: 5.5, 5.6, 5.7, 5.8, 6+
+Supported Laravel versions: 5.5+ ... 10+
 
 ```
 composer require mantas-done/laravel-apm
@@ -51,7 +51,3 @@ $schedule->call(function () {
     DB::table('recent_users')->delete();
 })->daily()->setName('some-name'); // add ->setName()
 ```
-
-## Laravel Telescope
-
-It might seem that they are similar. But Telescope helps figure out what each request does on their own. This package groups all the requests by URL and shows overall statistics.

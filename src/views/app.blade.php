@@ -140,8 +140,6 @@
     @include('apm::inline_js.js')
     @include('apm::inline_js.charts')
 </script>
-<script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
-<script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
 @yield('js')
 </body>
 
