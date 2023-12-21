@@ -26,12 +26,8 @@ class LogParser
             $data = \File::get($path);
             $data = trim($data);
 
-            $pattern = '/^([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+)/m';
-            if ($group === 'user') {
-                $pattern = '/^([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+)/m';
-            }
+            $pattern = '/^\|([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+)\|$/m';
             preg_match_all($pattern, $data, $matches, PREG_SET_ORDER);
-
             foreach ($matches as $record) {
                 // $timestamp, $duration, $sql_duration, $type, $name, $ip
 

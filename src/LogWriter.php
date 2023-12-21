@@ -77,6 +77,6 @@ class LogWriter
             $string_data .= " $user";
         }
 
-        return $string_data . "\n";
+        return '|' . $string_data . "|\n";
     }
 }
