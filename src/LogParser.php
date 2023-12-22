@@ -65,6 +65,10 @@ class LogParser
                         $count_by_hour[$hour . 'h'] = $record[2];
                     }
 
+                    if (in_array($record[5], config('apm.hide.longest_requests'))) {
+                        continue;
+                    }
+
                     $top_requests[$tmp_longest_i . ' ' . $record[5] . ' - ' . $record[6]] = $record[2];
                     $tmp_longest_i++;
                 } elseif ($group === 'user') {
@@ -99,7 +103,7 @@ class LogParser
         }
 
         arsort($top_requests);
-        $top_requests = array_slice($top_requests, 0, 50); // take top 50
+        $top_requests = array_slice($top_requests, 0, config('apm.per_page')); // take top 100
 
         return compact('count_by_hour', 'top_requests', 'top_total_count');
     }

@@ -46,10 +46,6 @@
             $block_data = [];
             $total_time = $data['top_total_count'];
             foreach ($data['top_requests'] as $name => $value) {
-                if (count($block_data) > 50) {
-                    break;
-                }
-
                 $percent = round($value / $total_time * 100);
                 if (in_array($group, ['request-count', 'user'])) {
                     $left = "$name ($value requests)";
