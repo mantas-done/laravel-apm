@@ -12,6 +12,7 @@ class LogParser
         $top_requests = [];
         $count_by_hour = [];
         $top_total_count = 0;
+        $tmp_longest_i = 0;
         for ($i = 0; $i < 24; $i++) {
             $count_by_hour[$i . 'h'] = 0;
         }
@@ -26,7 +27,7 @@ class LogParser
             $data = \File::get($path);
             $data = trim($data);
 
-            $pattern = '/^\|([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+)\|$/m';
+            $pattern = '/^\|([^\s|]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+) ([^\s]+)\|$/m';
             preg_match_all($pattern, $data, $matches, PREG_SET_ORDER);
             foreach ($matches as $record) {
                 // $timestamp, $duration, $sql_duration, $type, $name, $ip
@@ -64,12 +65,8 @@ class LogParser
                         $count_by_hour[$hour . 'h'] = $record[2];
                     }
 
-                    if (!isset($top_requests[$record[5]])) {
-                        $top_requests[$record[5]] = 0;
-                    }
-                    if ($top_requests[$record[5]] < $record[2]) {
-                        $top_requests[$record[5]] = $record[2];
-                    }
+                    $top_requests[$tmp_longest_i . ' ' . $record[5] . ' - ' . $record[6]] = $record[2];
+                    $tmp_longest_i++;
                 } elseif ($group === 'user') {
                     if ($record[4] !== 'request') {
                         break;

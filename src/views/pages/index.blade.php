@@ -51,8 +51,15 @@
                 }
 
                 $percent = round($value / $total_time * 100);
+                if (in_array($group, ['request-count', 'user'])) {
+                    $left = "$name ($value requests)";
+                } elseif ($group === 'longest') {
+                    $left = \Illuminate\Support\Str::after($name, ' ') . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
+                } else {
+                    $left = $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
+                }
                 $block_data[] = [
-                    'left' => in_array($group, ['request-count', 'user']) ? "$name ($value requests)" : $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')',
+                    'left' => $left,
                     'right' => $percent . '%',
                     'percent' => $percent,
                 ];

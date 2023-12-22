@@ -75,6 +75,8 @@ class LogWriter
         $string_data = "$time $duration $sql_time $type $name_without_spaces";
         if ($user !== null) {
             $string_data .= " $user";
+        } else {
+            $string_data .= " -";
         }
 
         return '|' . $string_data . "|\n";
