@@ -2,9 +2,13 @@
 
 Monitor requests/cron/queue execution times in production.   
 
-If you have a question: which page to optimize to reduce the server load? Then this package is for you.
+If you have a question: 
+  - which pages have the slowest loading time?
+  - which page to optimize to reduce the server load?
 
-![](http://i.imgur.com/wrUwCRi.png)
+Then this package is for you.
+
+![](https://i.imgur.com/yPfQieh.png)
 
 ## Installation
 

@@ -12,9 +12,9 @@
             <form action="">
                 <input type="hidden" name="type" value="{{ request('type') }}">
                 <select name="group">
+                    <option value="longest" @if (request('group') === 'longest') selected @endif>Longest requests</option>
                     <option value="total-time" @if (request('group') === 'total-time') selected @endif>Total time</option>
                     <option value="sql-time" @if (request('group') === 'sql-time') selected @endif>SQL time</option>
-                    <option value="longest" @if (request('group') === 'longest') selected @endif>Longest requests</option>
                     <option value="request-count" @if (request('group') === 'request-count') selected @endif>Request count</option>
                     <option value="user" @if (request('group') === 'user') selected @endif>User requests</option>
                 </select>

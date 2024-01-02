@@ -3,13 +3,11 @@
 
 // php memory x4 file size
 
-use Illuminate\Http\Request;
-
 class ApmController
 {
     private static $valid_filter_types = ['request', 'schedule', 'job'];
 
-    public function index(Request $r)
+    public function index()
     {
         if (!request('type')) {
             $url = route('apm', ['type' => 'request']);
@@ -17,7 +15,7 @@ class ApmController
         }
 
         $filter_type = request('type');
-        $group = request('group','total-time');
+        $group = request('group', 'longest');
 
         if (!in_array($filter_type, self::$valid_filter_types)) {
             abort(400, 'Invalid type');
