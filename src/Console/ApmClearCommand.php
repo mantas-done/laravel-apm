@@ -1,6 +1,7 @@
 <?php namespace Done\LaravelAPM\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 
 class ApmClearCommand extends Command
 {
@@ -39,9 +40,14 @@ class ApmClearCommand extends Command
         $files = \File::allFiles($path);
         foreach ($files as $file) {
             $filename = $file->getFilename();
-            $pattern = '/^(apm-[0-9]{4}-[0-9]{2}-[0-9]{2}\.txt)$/';
+            $pattern = '/^apm-(?<Y>[0-9]{4})-(?<m>[0-9]{2})-(?<d>[0-9]{2})_[0-9]{2}\.txt$/';
             preg_match($pattern, $filename, $matches);
-            if (!empty($matches) && isset($matches[1])) {
+            if (!isset($matches['Y'])) {
+                continue; // if file didn't matched our file regex pattern
+            }
+            $date = $matches['Y'] . '-' . $matches['m'] . '-' . $matches['d'];
+            $diff = Date::parse($date)->diffInDays(null, false);
+            if ($diff >= 2) {
                 \File::delete($file);
             }
         }
