@@ -50,7 +50,7 @@
                 $percent = round($value / $total_time * 100);
                 if (in_array($group, ['request-count', 'user'])) {
                     $left = "$name ($value requests)";
-                } elseif ($group === 'longest') {
+                } elseif ($group === 'longest' || $group === 'longest-sql') {
                     $left = \Illuminate\Support\Str::after($name, ' ') . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
                 } else {
                     $left = $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
