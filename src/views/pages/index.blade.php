@@ -13,6 +13,7 @@
                 <input type="hidden" name="type" value="{{ request('type') }}">
                 <select name="group">
                     <option value="longest" @if (request('group') === 'longest') selected @endif>Longest requests</option>
+                    <option value="longest-sql" @if (request('group') === 'longest-sql') selected @endif>Longest by SQL time</option>
                     <option value="total-time" @if (request('group') === 'total-time') selected @endif>Total time</option>
                     <option value="sql-time" @if (request('group') === 'sql-time') selected @endif>SQL time</option>
                     <option value="request-count" @if (request('group') === 'request-count') selected @endif>Request count</option>
@@ -88,6 +89,9 @@
                         <p><b>Shows:</b> single page that took the longest to load.</p>
                         <p><b>Purpose:</b> to find problematic pages</p>
                         <p>Some pages with low amount of data will load quickly. After some time when some tables gather a lot of rows, those pages might start to load slower. All the data is shown for a single page load.</p>
+                    @elseif ($group === 'longest-sql')
+                        <p><b>Shows:</b> single page that spent the most time in SQL queries.</p>
+                        <p><b>Purpose:</b> to find pages that abuse SQL queries</p>
                     @elseif ($group === 'request-count')
                         Pages that received the most requests.
                     @elseif ($group === 'user')

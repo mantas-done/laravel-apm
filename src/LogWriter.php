@@ -21,6 +21,11 @@ class LogWriter
     // write to disk
     public static function write()
     {
+        // sampling
+        if (rand(1, 1 / config('apm.sampling')) !== 1) {
+            return;
+        }
+
         $data = self::$data;
         if (!trim($data)) {
             return;

@@ -71,6 +71,13 @@ class LogParser
 
                     $top_requests[$tmp_longest_i . ' ' . $record[5] . ' - ' . $record[6]] = $record[2];
                     $tmp_longest_i++;
+                } elseif ($group === 'longest-sql') {
+                    if ($count_by_hour[$hour . 'h'] < $record[3]) {
+                        $count_by_hour[$hour . 'h'] = $record[3];
+                    }
+
+                    $top_requests[$tmp_longest_i . ' ' . $record[5] . ' - ' . $record[6]] = $record[3];
+                    $tmp_longest_i++;
                 } elseif ($group === 'user') {
                     if ($record[4] !== 'request') {
                         break;
@@ -94,6 +101,8 @@ class LogParser
             } elseif ($group === 'request-count') {
                 $top_total_count += array_sum($count_by_hour);
             } elseif ($group === 'longest') {
+                $top_total_count += count($top_requests) ? max($top_requests) : 0;
+            } elseif ($group === 'longest-sql') {
                 $top_total_count += count($top_requests) ? max($top_requests) : 0;
             } elseif ($group === 'user') {
                 $top_total_count += array_sum($count_by_hour);
