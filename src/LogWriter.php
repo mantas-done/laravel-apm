@@ -22,7 +22,7 @@ class LogWriter
     public static function write()
     {
         // sampling
-        if (rand(1, 1 / config('apm.sampling')) !== 1) {
+        if (rand(1, 1 / config('apm.sampling', 1)) !== 1) {
             return;
         }
 

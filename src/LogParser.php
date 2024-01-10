@@ -65,10 +65,6 @@ class LogParser
                         $count_by_hour[$hour . 'h'] = $record[2];
                     }
 
-                    if (in_array($record[5], config('apm.hide.longest_requests'))) {
-                        continue;
-                    }
-
                     $top_requests[$tmp_longest_i . ' ' . $record[5] . ' - ' . $record[6]] = $record[2];
                     $tmp_longest_i++;
                 } elseif ($group === 'longest-sql') {
