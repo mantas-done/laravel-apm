@@ -151,7 +151,7 @@ class LogParser
         if ($output === '') {
             $output = 'No records were found';
         } else {
-            $output = '<h1>SQL queries</h1>seconds query<br>' . $output;
+            $output = '<h1>SQL queries</h1>milliseconds query<br>' . $output;
         }
         return $output;
     }

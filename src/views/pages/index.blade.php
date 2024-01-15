@@ -62,6 +62,7 @@
                     'right' => $percent . '%',
                     'percent' => $percent,
                     'hidden' => $hidden,
+                    'value' => $value,
                 ];
             }
             ?>

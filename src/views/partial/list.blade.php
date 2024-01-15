@@ -13,11 +13,9 @@
         <h6 class="m-0 font-weight-bold text-primary">{{ $title }}</h6>
     </div>
     <div class="card-body">
-        <?php
-        $visible_more = $filter_type === 'request' && $group === 'longest-sql';
-        ?>
         @foreach ($data as $row)
             <?php
+            $visible_more = $filter_type === 'request' && $group === 'longest-sql' && $row['value'] > config('apm.slow', 10) ;
             $random_color = [
                 'bg-warning',
                 '',
