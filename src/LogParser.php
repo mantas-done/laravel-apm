@@ -1,5 +1,7 @@
 <?php namespace Done\LaravelAPM;
 
+use Illuminate\Support\Str;
+
 class LogParser
 {
     /**
@@ -109,8 +111,49 @@ class LogParser
 
         arsort($top_requests);
         $top_requests = array_slice($top_requests, 0, config('apm.per_page')); // take top 100
-
         return compact('count_by_hour', 'top_requests', 'top_total_count');
+    }
+
+    public static function filter($query)
+    {
+        $path1 = 'slow-apm-' . now()->subDay()->format('Y-m-d') . '.txt';
+        $path2 = 'slow-apm-' . now()->format('Y-m-d') . '.txt';
+        $path1 = storage_path('app/apm/' . $path1);
+        $path2 = storage_path('app/apm/' . $path2);
+
+        $data = '';
+        if (file_exists($path1)) {
+            $data .= "\n\n" . file_get_contents($path1);
+        }
+        if (file_exists($path2)) {
+            $data .= "\n\n" . file_get_contents($path2);
+        }
+
+        $lines = explode("\n", $data);
+        $found = false;
+        $output = '';
+        foreach ($lines as $line) {
+            if (!$found) {
+                if (Str::contains($line, $query)) {
+                    $found = true;
+                    continue;
+                } else {
+                    continue;
+                }
+            } else {
+                if ($line === '') {
+                    break;
+                } else {
+                    $output .= $line . "<br>";
+                }
+            }
+        }
+        if ($output === '') {
+            $output = 'No records were found';
+        } else {
+            $output = '<h1>SQL queries</h1>seconds query<br>' . $output;
+        }
+        return $output;
     }
 
     // ---------------------------------------- private ----------------------------------------------------------------

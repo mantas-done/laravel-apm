@@ -9,6 +9,10 @@ class ApmController
 
     public function index()
     {
+        if (request('filter')) {
+            return LogParser::filter(request('filter'));
+        }
+
         if (!request('type')) {
             $url = route('apm', ['type' => 'request']);
             return redirect($url);

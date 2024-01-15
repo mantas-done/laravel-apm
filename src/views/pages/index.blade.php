@@ -47,11 +47,13 @@
             $block_data = [];
             $total_time = $data['top_total_count'];
             foreach ($data['top_requests'] as $name => $value) {
+                $hidden = null;
                 $percent = round($value / $total_time * 100);
                 if (in_array($group, ['request-count', 'user'])) {
                     $left = "$name ($value requests)";
                 } elseif ($group === 'longest' || $group === 'longest-sql') {
                     $left = \Illuminate\Support\Str::after($name, ' ') . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
+                    $hidden = $value . ' request ' . \Illuminate\Support\Str::after(str_replace(' - ', ' ', $name), ' ');
                 } else {
                     $left = $name . ' (' . \Done\LaravelAPM\Helpers\Helper::timeForHumans($value) . ')';
                 }
@@ -59,6 +61,7 @@
                     'left' => $left,
                     'right' => $percent . '%',
                     'percent' => $percent,
+                    'hidden' => $hidden,
                 ];
             }
             ?>

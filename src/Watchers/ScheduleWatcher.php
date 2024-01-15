@@ -12,7 +12,9 @@ class ScheduleWatcher
             $event->runtime,
             QueryWatcher::getMilliseconds() / 1000,
             'schedule',
-            $event->task->getSummaryForDisplay() ?: 'Closure'
+            $event->task->getSummaryForDisplay() ?: 'Closure',
+            null,
+            []
         );
     }
 }

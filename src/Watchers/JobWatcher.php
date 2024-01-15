@@ -19,7 +19,9 @@ class JobWatcher
             $duration,
             QueryWatcher::getMilliseconds() / 1000,
             'job',
-            $event->job->resolveName()
+            $event->job->resolveName(),
+            null,
+            []
         );
     }
 }
