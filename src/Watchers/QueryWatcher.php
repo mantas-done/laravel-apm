@@ -12,11 +12,13 @@ class QueryWatcher
     {
         self::$total_milliseconds += $event->time;
 
-        if (self::$query_count > 50) { // max 50 queries per log
-            self::$queries[] = $event->time . ' ...';
+        if (self::$query_count === 1000) { // max 1000 queries per log
+            self::$queries[] = '... more queries ...';
+            return;
+        } elseif (self::$query_count > 1000) {
             return;
         }
-        self::$queries[] = $event->time . ' ' . $event->sql;
+        self::$queries[] = $event->time . ' | ' . $event->sql . ' | ' . implode(' ', $event->bindings);;
         self::$query_count++;
     }
 
