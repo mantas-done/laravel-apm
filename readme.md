@@ -30,12 +30,6 @@ Daily clear log files by adding scheduled job to App/Console/Kernel.php
 $schedule->command('apm:clear')->daily();
 ```
 
-Enable APM in .env file
-
-```
-APM=1
-```
-
 ## Why?
 
 Laravel APM can show pages that have the biggest impact on the server load. When you are developing the website, it is hard to tell which pages will receive the most pageviews and which will use the most resources: (per page resource usage) x (pageviews) = (this package stats)
@@ -53,8 +47,10 @@ Then edit /config/apm.php values to your liking.
 
 ```php
 return [
-    'enabled' => env('APM', false),
+    'enabled' => env('APM', true),
     'per_page' => 100, // how many results per page to show
+    'sampling' => 1, // logs only part of requests. 1 - 100%, 0.1 - 10% of requests.
+    'slow' => 5, // log queries of pages that spent in SQL more than 10 seconds
 ];
 ```
 
