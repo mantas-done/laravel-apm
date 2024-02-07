@@ -105,7 +105,7 @@ class LogWriter
         return $full_path;
     }
 
-    private static function directory()
+    public static function directory()
     {
         return storage_path(self::$directory_path);
     }

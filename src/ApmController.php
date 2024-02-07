@@ -9,6 +9,13 @@ class ApmController
 
     public function index()
     {
+        $directory = LogWriter::directory();
+        if (!file_exists($directory)) {
+            $is_success = \File::makeDirectory($directory);
+            \Log::error("APM: can't create directory $directory");
+            abort_if(!$is_success, 400, "APM: can't create directory $directory");
+        }
+
         if (request('filter')) {
             return LogParser::filter(request('filter'));
         }
