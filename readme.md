@@ -12,7 +12,7 @@ Then this package is for you.
 
 ## Installation
 
-Supported Laravel versions: 5.5+ ... 10+
+Supported Laravel versions: 8 ... 11+
 
 ```
 composer require mantas-done/laravel-apm

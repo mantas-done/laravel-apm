@@ -19,7 +19,11 @@ class QueryWatcher
         } elseif (self::$query_count > 1000) {
             return;
         }
-        self::$queries[] = $event->time . ' | ' . $event->sql . ' | ' . implode(' ', $event->bindings);;
+        self::$queries[] = [
+            'time' => $event->time,
+            'sql' => $event->sql,
+            'bindings' => $event->bindings,
+        ];
         self::$query_count++;
     }
 

@@ -6,7 +6,7 @@ class LogWriter
 
     private static $sql_duration = 0;
     private static $data = '';
-    private static $queries;
+    private static $queries = [];
 
     public static function logAndWrite($current_time, $total_duration, $sql_duration, $type, $name, $user, $queries)
     {
@@ -18,7 +18,7 @@ class LogWriter
     public static function log($current_time, $total_duration, $sql_duration, $type, $name, $user, $queries)
     {
         self::$sql_duration = $sql_duration;
-        self::$data .= self::formatData($current_time, $total_duration, $sql_duration, $type, $name, $user);
+        self::$data = compact('current_time', 'total_duration', 'sql_duration', 'type', 'name', 'user');
         self::$queries = $queries;
     }
 
@@ -31,9 +31,6 @@ class LogWriter
         }
 
         $data = self::$data;
-        if (!trim($data)) {
-            return;
-        }
 
         $directory = self::directory();
         $filename = self::filename();
@@ -54,9 +51,20 @@ class LogWriter
             return;
         }
 
+        if (
+            config('apm.hide_aws_slow_mysql_connect', false)
+            && isset(self::$queries[0])
+            && self::$queries[0]['time'] > 5
+            && self::$queries[0]['time'] < 5.05
+        ) {
+            $data['total_duration'] -= 5;
+            $data['sql_duration'] -= 5;
+        }
+
+        $data_string = self::formatData($data['current_time'], $data['total_duration'], $data['sql_duration'], $data['type'], $data['name'], $data['user']);
         file_put_contents(
             $filename,
-            $data,
+            $data_string,
             FILE_APPEND
         );
         
@@ -74,8 +82,15 @@ class LogWriter
                 return;
             }
 
-            $slow_data = implode("\n", self::$queries);
-            $slow_data = $data . $slow_data . "\n\n";
+            $slow_data = $data_string;
+            foreach (self::$queries as $query) {
+                $slow_data .= $query['time']
+                    . ' | ' . $query['sql']
+                    . ' | ' . implode(' ', $query['bindings'])
+                    . "\n"
+                ;
+            }
+            $slow_data .= "\n";
 
             file_put_contents(
                 $slow_filename,
@@ -86,7 +101,7 @@ class LogWriter
             self::$queries = [];
         }
 
-        self::$data = '';
+        self::$data = [];
     }
 
     private static function filename()
