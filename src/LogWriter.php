@@ -5,7 +5,7 @@ class LogWriter
     private static $directory_path = 'app/apm';
 
     private static $sql_duration = 0;
-    private static $data = '';
+    private static $data = [];
     private static $queries = [];
 
     public static function logAndWrite($current_time, $total_duration, $sql_duration, $type, $name, $user, $queries)
@@ -31,6 +31,9 @@ class LogWriter
         }
 
         $data = self::$data;
+        if (empty($data)) {
+            return;
+        }
 
         $directory = self::directory();
         $filename = self::filename();
