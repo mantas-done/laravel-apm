@@ -57,8 +57,8 @@ class LogWriter
         if (
             config('apm.hide_aws_slow_mysql_connect', false)
             && isset(self::$queries[0])
-            && self::$queries[0]['time'] > 5
-            && self::$queries[0]['time'] < 5.05
+            && self::$queries[0]['time'] > 5000 // >5 seconds
+            && self::$queries[0]['time'] < 5025
         ) {
             $data['total_duration'] -= 5;
             $data['sql_duration'] -= 5;
