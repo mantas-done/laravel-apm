@@ -13,7 +13,11 @@ class QueryWatcher
         self::$total_milliseconds += $event->time;
 
         if (self::$query_count === 1000) { // max 1000 queries per log
-            self::$queries[] = '... more queries ...';
+            self::$queries[] = [
+                'time' => $event->time,
+                'sql' => '... more queries ...',
+                'bindings' => [],
+            ];
             self::$query_count++;
             return;
         } elseif (self::$query_count > 1000) {
